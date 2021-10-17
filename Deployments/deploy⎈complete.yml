@@ -10,21 +10,22 @@ spec:
     matchLabels:
       app: web
   replicas: 5
+  # for rolling updates: wait 5s before moving on to next pod
   minReadySeconds: 5
   strategy:
     type: RollingUpdate
     rollingUpdate:
       maxUnavailable: 0
-      maxSurge: 1
+      maxSurge: 1 # max 1 extra pod
   template:
     metadata:
       labels:
         app: web
-    spec: 
+    spec:
       terminationGracePeriodSeconds: 1
       containers:
-      - name: hello-pod
-        image: nigelpoulton/getting-started-k8s:2.0
-        imagePullPolicy: Always
-        ports:
-        - containerPort: 8080
+        - name: hello-pod
+          image: nigelpoulton/getting-started-k8s:2.0
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 8080
